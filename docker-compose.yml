@@ -1,0 +1,30 @@
+version: '3.3'
+
+services:
+  chef-server:
+    container_name: chef-server
+    hostname: chef-server
+    build: ./chef_server
+    privileged: true
+    environment:
+      - CHEF_USER=admin
+      - CHEF_PSWD=examplepass
+      - CHEF_EMAIL=admin@example.com
+      - CHEF_ORG=exampleorg
+    volumes:
+      - ./files/keys/:/etc/chef/keys
+
+  chef-workstation:
+    hostname: chef-workstation
+    container_name: chef-workstation
+    build: ./chef_workstation
+    environment:
+      - CHEF_USER=admin
+      - CHEF_ORG=exampleorg
+      - CHEF_SERVER=chef-server
+    volumes:
+      - ./files/keys/:/etc/chef/keys
+      - ./files/chef_repo:/chef_repo
+    links:
+      - chef-server
+

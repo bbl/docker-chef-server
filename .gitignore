@@ -1,0 +1,5 @@
+.*
+!.gitignore
+!files/chef_repo/.chef
+files/keys
+files/chef_repo/.chef/trusted_certs
